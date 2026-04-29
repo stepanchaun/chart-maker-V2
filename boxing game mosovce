@@ -1,0 +1,55 @@
+import math, tkinter as tk, datetime as dt
+
+win = tk.Tk()
+win.title("Drag and Drop")
+
+def move_it(event):
+    global pos_x, pos_y
+    if pos_x != -1:
+        vector_x = event.x - pos_x
+        vector_y = event.y - pos_y
+        pos_x = event.x
+        pos_y = event.y
+        canvas.move(objekt_jerk, vector_x, vector_y)
+    print("som pod tlakom")
+
+
+def click(event):
+    global pos_x, pos_y
+    print("click succeeded", event.x, event.y)
+    objects = canvas.find_overlapping(event.x, event.y, event.x+1, event.y+1)
+    if objekt_jerk in objects:
+        pos_x = event.x
+        pos_y = event.y
+        
+    
+    print("timo 6 7", objects)
+
+def release(event):
+    global pos_x, pos_y
+    pos_x = -1
+    pos_y = -1
+
+    print("bomboclaat")
+
+
+
+canvas = tk.Canvas(win, width=800, height=800, bg="white")
+
+
+
+canvas.pack()
+
+
+
+objekt_jerk = canvas.create_rectangle(0,0,100,100,fill="teal", outline="black", width=3)
+
+
+
+canvas.bind('<Button-1>', click)
+canvas.bind('<B1-Motion>', move_it)
+canvas.bind('<ButtonRelease-1>', release)
+
+
+
+win.mainloop()
